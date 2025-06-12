@@ -154,7 +154,7 @@
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-       window.location=('crud/deletebarang.php?id='+data_id); 
+       window.location=('crud/deletekategori.php?idkategori='+data_id); 
       }
     })
     }
