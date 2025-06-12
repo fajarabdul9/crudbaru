@@ -2,9 +2,10 @@
 include('../config/config.php');
 $kodebarang = $_GET['kode_barang'];
 $namabarang = $_GET['nama_barang'];
+$idkategori = $_GET['idkategori'];
 $qty = $_GET['qty'];
-
-$query = mysqli_query($conn, "INSERT INTO barang (idbarang, kode_barang, nama_barang, qty, status) values ('','$kodebarang', '$namabarang', '$qty','1')");
+$query = mysqli_query($conn, "INSERT INTO barang (idbarang, kode_barang, nama_barang, idkategori, qty, status) values ('','$kodebarang', '$namabarang', '$idkategori', '$qty','1')") or die(mysqli_error($conn));
+// $query = mysqli_query($conn, "INSERT INTO barang (idbarang, kode_barang, nama_barang, qty, status) values ('','$kodebarang', '$namabarang', '$qty','1')");
 // header("location: ../index.php?page=barang");
 if ($query) {
     echo "<script>alert('Data Berhasil Ditambahkan'); window.location.href='../index.php?page=barang';</script>";

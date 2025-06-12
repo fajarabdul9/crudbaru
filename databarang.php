@@ -20,6 +20,7 @@
                     <th>Id</th>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
+                    <th>Kategori Barang</th>
                     <th>Quantity</th>
                     <th>Action</th>
                     <th>Foto</th>
@@ -28,9 +29,10 @@
                   <tbody>
                     <?php
                     // $query = mysqli_query($conn, "SELECT * FROM barang");
-                    $query = mysqli_query($conn, "SELECT barang.idbarang, barang.kode_barang, barang.nama_barang, barang.qty, barang.img, detailpembelian.id_pembelian, detailpenjualan.id_penjualan
+                    $query = mysqli_query($conn, "SELECT barang.idbarang, barang.idkategori, barang.kode_barang, barang.nama_barang, barang.qty, barang.img, detailpembelian.id_pembelian, detailpenjualan.id_penjualan
                     FROM barang
-                    LEFT JOIN detailpembelian ON barang.idbarang = detailpembelian.idbarang      
+                    LEFT JOIN detailpembelian ON barang.idbarang = detailpembelian.idbarang  
+                    LEFT JOIN kategoribarang ON barang.idkategori = kategoribarang.idkategori    
                     LEFT JOIN pembelian ON detailpembelian.id_pembelian = pembelian.id_pembelian
                     -- LEFT JOIN penjualan ON barang.idbarang = penjualan.idbarang
                     LEFT JOIN detailpenjualan ON barang.idbarang = detailpenjualan.idbarang") or die(mysqli_error($conn));
@@ -41,6 +43,14 @@
                         <td><?php echo $data['idbarang']; ?></td>
                         <td><?php echo $data['kode_barang']; ?></td>
                         <td><?php echo $data['nama_barang']; ?></td>
+                        <td>
+                          <?php
+                          $idkategori = $data['idkategori'];
+                          $query2 = mysqli_query($conn, "SELECT * FROM kategoribarang WHERE idkategori='$idkategori'");
+                          $data2 = mysqli_fetch_array($query2);
+                          echo $data2['namakategori'];
+                          ?>
+                        </td>
                         <td><?php echo $data['qty']; ?></td>
                         <td>
                           <a href="index.php?page=detail-barang&&idbarang=<?php echo $data['idbarang']; ?>" class="btn btn-primary">Detail</a>
@@ -102,6 +112,19 @@
                     <label for="exampleInputEmail1">Nama Barang</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Nama Barang" name="nama_barang" required>
                   </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Kategori Barang</label>
+                    <select class="form-control" name="idkategori" required>
+                      <option value="">Pilih Kategori Barang</option>
+                      <?php
+                      $query = mysqli_query($conn, "SELECT * FROM kategoribarang");
+                      while ($data = mysqli_fetch_array($query)) {
+                        ?>
+                        <option value="<?php echo $data['idkategori']; ?>"><?php echo $data['namakategori']; ?></option>
+                        <?php
+                      }
+                      ?>
+                    </select>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Quantity Barang</label>
                     <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Quantity" name="qty" required>

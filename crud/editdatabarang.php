@@ -27,6 +27,23 @@ $data = mysqli_fetch_array($query);
                         <input type="text" class="form-control" placeholder="Enter ..." name="nama_barang" value="<?php echo $data['nama_barang']; ?>" >
                       </div>
                     </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Kategori</label>
+                        <select class="form-control" name="idkategori" required>
+                          <option value="">Pilih Kategori Barang</option>
+                          <?php
+                          $query = mysqli_query($conn, "SELECT * FROM kategoribarang");
+                          while ($kategori = mysqli_fetch_array($query)) {
+                            ?>
+                            <option value="<?php echo $kategori['idkategori']; ?>" <?php if ($data['idkategori'] == $kategori['idkategori']) echo 'selected'; ?>><?php echo $kategori['namakategori']; ?></option>
+                            <?php
+                          
+                          }
+                          ?>  
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-6">
